@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Food {
+  id          Int       @id @default(autoincrement())
+  categoryId  Int
+  Catergory   Category  @relation(fields: [categoryId], references: [id])
+  price       String
+  name        String
+  description String
+  observation String?
+  Kitchen     Kitchen[]
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+  Food Food[]
+}
+
+model Kitchen {
+  id          Int               @id @default(autoincrement())
+  nameUser    String
+  foodId      Int
+  Food        Food              @relation(fields: [foodId], references: [id])
+  preparation StatusPreparation
+}
+
+enum StatusPreparation {
+  PEDDING
+  READY
+}
