@@ -7,5 +7,6 @@ const foodRouter = Router()
 
 foodRouter.get('/', foodController.findAllFood)
 foodRouter.post('/', validateBody(foodSchema), foodController.findFoodByNameOrCode)
+foodRouter.post('/create', foodController.create)
 
 export default foodRouter

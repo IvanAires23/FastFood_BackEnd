@@ -8,14 +8,16 @@ datasource db {
 }
 
 model Food {
-  id          Int       @id @default(autoincrement())
-  categoryId  Int
-  Catergory   Category  @relation(fields: [categoryId], references: [id])
-  price       Int
-  name        String
-  description String
-  code        Int
-  Kitchen     Kitchen[]
+  id             Int       @id @default(autoincrement())
+  categoryId     Int
+  Catergory      Category  @relation(fields: [categoryId], references: [id])
+  price          Int
+  name           String
+  subDescription String
+  description    String
+  code           Int
+  image          String
+  Kitchen        Kitchen[]
 
   @@map("foods")
 }

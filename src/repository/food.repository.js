@@ -19,9 +19,24 @@ async function findFoodByNameOrCode(name, code) {
     })
 }
 
+async function create(body) {
+    return prisma.category.create({
+        data: {
+            code: body.code,
+            description: body.description,
+            image: body.image,
+            name: body.name,
+            price: body.price,
+            categoryId: body.categoryId,
+            subDescription: body.subDescription
+        }
+    })
+}
+
 const foodRepository = {
     findAllFood,
-    findFoodByNameOrCode
+    findFoodByNameOrCode,
+    create
 }
 
 export default foodRepository

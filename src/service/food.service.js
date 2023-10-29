@@ -10,9 +10,15 @@ async function findFoodByNameOrCode(name, code) {
     return food
 }
 
+async function create(body) {
+    const food = await foodRepository.create(body)
+    return food
+}
+
 const foodService = {
     findAllFood,
-    findFoodByNameOrCode
+    findFoodByNameOrCode,
+    create
 }
 
 export default foodService
