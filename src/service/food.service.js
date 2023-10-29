@@ -5,8 +5,14 @@ async function findAllFood() {
     return foods
 }
 
+async function findFoodByNameOrCode(name, code) {
+    const food = await foodRepository.findFoodByNameOrCode(name, code)
+    return food
+}
+
 const foodService = {
-    findAllFood
+    findAllFood,
+    findFoodByNameOrCode
 }
 
 export default foodService

@@ -10,8 +10,20 @@ async function findAllFood(req, res) {
     }
 }
 
+async function findFoodByNameOrCode(req, res) {
+    const { name, code } = req.body
+
+    try {
+        const food = await foodService.findFoodByNameOrCode(name, code)
+        res.status(httpStatus.OK).send(food)
+    } catch (err) {
+        res.statusSend(httpStatus.INTERNAL_SERVER_ERROR)
+    }
+}
+
 const foodController = {
-    findAllFood
+    findAllFood,
+    findFoodByNameOrCode
 }
 
 export default foodController

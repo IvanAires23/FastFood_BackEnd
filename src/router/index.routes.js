@@ -1,8 +1,9 @@
 import { Router } from "express";
 import foodController from "../controller/food.controller.js";
+import foodRouter from "./food.routes.js";
 
 const router = Router()
 
-router.get('/food', foodController.findAllFood)
+router.use('/food', foodRouter)
 
 export default router

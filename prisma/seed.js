@@ -18,7 +18,8 @@ async function createDefaultFood() {
             name: "Hambúrguer",
             description: "2x hambúrguer 200g, queijo cheddar, tomate, alface, picles, cebola, molho da casa",
             categoryId: category.id,
-            price: 3050
+            price: 3050,
+            code: 200
         }
     })
 
