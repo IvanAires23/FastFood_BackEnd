@@ -9,7 +9,6 @@ async function create(body){
     if(!food) throw { name: 'notFound', message: 'Food not found' };
 
     const kitchen = await kitchenRepository.create(body);
-    console.log(kitchen);
     return kitchen;
 }
 

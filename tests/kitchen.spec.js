@@ -23,6 +23,7 @@ describe('POST /kitchen', () => {
             '"payment" is required',
             '"name" is required',
             '"foodId" is required',
+            '"change" is required',
         ]));
     });
     
@@ -32,6 +33,7 @@ describe('POST /kitchen', () => {
                 payment: 'CREDIT',
                 foodId: faker.number.int({max: 100}),
                 money: faker.number.int({max: 100}),
+                change: faker.finance.amount(5, 10),
             });
     
         expect(response.status).toBe(httpStatus.BAD_REQUEST);
@@ -46,12 +48,26 @@ describe('POST /kitchen', () => {
                 name: faker.person.firstName(),
                 foodId: faker.number.int({max: 100}),
                 money: faker.number.int({max: 100}),
+                change: faker.finance.amount(5, 10),
             });
     
         expect(response.status).toBe(httpStatus.BAD_REQUEST);
         expect(response.body).toEqual(expect.arrayContaining([
             '"payment" is required'
         ]));
+    });
+
+    test('should return 404 when not found food', async () => {
+        const response = await server.post('/kitchen')
+            .send({
+                payment: 'CREDIT',
+                name: faker.person.firstName(),
+                foodId: faker.number.int({max:100}),
+                money: faker.finance.amount({max:10000}),
+                change: faker.finance.amount(5, 10),
+            });
+        expect(response.status).toBe(httpStatus.NOT_FOUND);
+        expect(response.body).toEqual({ name: 'notFound', message: 'Food not found' });
     });
     
     test('should return 201 when request food confirmed', async () => {
@@ -63,8 +79,8 @@ describe('POST /kitchen', () => {
                 name: faker.person.firstName(),
                 foodId: food.id,
                 money: faker.finance.amount({max:10000}),
+                change: faker.finance.amount(5, 10),
             });
-        console.log(response.body);
         expect(response.status).toBe(httpStatus.CREATED);
     });
 });
