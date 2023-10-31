@@ -6,5 +6,6 @@ import kitchenController from '../controller/kitchen.controller.js';
 const kitchenRouter = Router();
 
 kitchenRouter.post('/', validateBody(kitchenSchema), kitchenController.create);
+kitchenRouter.get('/', kitchenController.findAll);
 
 export default kitchenRouter;

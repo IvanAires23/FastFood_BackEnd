@@ -13,8 +13,13 @@ async function create(body){
     });
 }
 
+async function findAll(){
+    return prisma.kitchen.findMany();
+}
+
 const kitchenRepository = {
-    create
+    create,
+    findAll
 };
 
 export default kitchenRepository;

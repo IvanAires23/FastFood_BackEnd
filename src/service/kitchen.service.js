@@ -12,8 +12,14 @@ async function create(body){
     return kitchen;
 }
 
+async function findAll(){
+    const kitchen = await kitchenRepository.findAll();
+    return kitchen;
+}
+
 const kitchenService = {
-    create
+    create,
+    findAll
 };
 
 export default kitchenService;

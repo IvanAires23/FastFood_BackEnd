@@ -12,8 +12,18 @@ async function create(req, res){
     }
 }
 
+async function findAll(req, res){
+    try{
+        const kitchen = await kitchenService.findAll();
+        res.status(httpStatus.OK).send(kitchen);
+    }catch(err){
+        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
 const kitchenController = {
-    create
+    create,
+    findAll
 };
 
 export default kitchenController;
