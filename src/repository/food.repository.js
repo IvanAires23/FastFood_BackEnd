@@ -16,6 +16,10 @@ async function findFoodByNameOrCode(code) {
     });
 }
 
+async function findById(id){
+    return prisma.food.findFirst({ where: { id } });
+}
+
 async function create(body) {
     return prisma.food.create({
         data: {
@@ -33,6 +37,7 @@ async function create(body) {
 const foodRepository = {
     findAllFood,
     findFoodByNameOrCode,
+    findById,
     create
 };
 

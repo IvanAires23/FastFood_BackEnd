@@ -1,6 +1,7 @@
 import prisma from '../config/database.js';
 
 async function create(body){
+    console.log(body);
     return prisma.kitchen.create({
         data:{
             nameUser: body.name,
