@@ -20,7 +20,7 @@ async function createDefaultFood() {
             price: 3050,
             code: 200
         }
-    })
+    });
 
     return food;
 }

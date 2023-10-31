@@ -1,7 +1,7 @@
 import prisma from '../config/database.js';
 
 async function findAllFood() {
-    return prisma.food.findMany()
+    return prisma.food.findMany();
 }
 
 async function findFoodByNameOrCode(code) {
@@ -13,7 +13,7 @@ async function findFoodByNameOrCode(code) {
             ],
 
         }
-    })
+    });
 }
 
 async function create(body) {
@@ -27,13 +27,13 @@ async function create(body) {
             subDescription: body.subDescription,
             category: body.category
         }
-    })
+    });
 }
 
 const foodRepository = {
     findAllFood,
     findFoodByNameOrCode,
     create
-}
+};
 
-export default foodRepository
+export default foodRepository;
