@@ -1,4 +1,4 @@
-import prisma from '../config/database';
+import prisma from '../config/database.js';
 
 async function create(body){
     return prisma.kitchen.create({

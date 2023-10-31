@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import kitchenService from '../service/kitchen.service';
+import kitchenService from '../service/kitchen.service.js';
 
 async function create(req, res){
     try{

@@ -1,4 +1,4 @@
-import kitchenRepository from '../repository/Kitchen.repository';
+import kitchenRepository from '../repository/Kitchen.repository.js';
 
 async function create(body){
     if(body.name === '') throw { name: 'badRequest' };

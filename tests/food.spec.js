@@ -27,5 +27,3 @@ describe('GET /food', () => {
         expect(response.status).toBe(httpStatus.OK);
     });
 });
-
-describe('POST /food',);

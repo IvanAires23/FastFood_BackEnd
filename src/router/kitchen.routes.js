@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import validateBody from '../middleware/validateBody.middleware';
-import kitchenSchema from '../schema/kitchen.schema';
-import kitchenController from '../controller/kitchen.controller';
+import validateBody from '../middleware/validateBody.middleware.js';
+import kitchenSchema from '../schema/kitchen.schema.js';
+import kitchenController from '../controller/kitchen.controller.js';
 
 const kitchenRouter = Router();
 

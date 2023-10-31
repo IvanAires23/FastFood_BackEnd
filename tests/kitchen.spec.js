@@ -3,56 +3,68 @@ import supertest from 'supertest';
 import app from '../src/app';
 import { faker } from '@faker-js/faker';
 import httpStatus from 'http-status';
+import createFood from './factories/food.fatory';
+import cleanDB from './helpers/cleanDb';
 
 const server = supertest(app);
 
-test('should return 400 when not send data payments', async () => {
-    const response = await server.post('/payment')
-        .send({});
-
-    expect(response.status).toBe(httpStatus.PAYMENT_REQUIRED);
-    expect(response.body).toEqual(expect.arrayContaining([
-        '"formPayment" is required',
-        '"name" is required'
-    ]));
+beforeEach(async () => {
+    await cleanDB();
 });
 
-test('should return 400 when not send name', async () => {
-    const response = await server.post('/payment')
-        .send({
-            formPayment: 'CREDIT',
-            codeRequest: faker.number.int({ max: 1000 }),
-            codeFood: faker.number.int({ max: 1000 })
-        });
+describe('POST /kitchen', () => {
+    test('should return 400 when not send data payments', async () => {
+        const response = await server.post('/kitchen')
+            .send({});
+    
+        expect(response.status).toBe(httpStatus.BAD_REQUEST);
+        expect(response.body).toEqual(expect.arrayContaining([
+            '"money" is required',
+            '"payment" is required',
+            '"name" is required',
+            '"foodId" is required',
+        ]));
+    });
+    
+    test('should return 400 when not send name', async () => {
+        const response = await server.post('/kitchen')
+            .send({
+                payment: 'CREDIT',
+                foodId: faker.number.int({max: 100}),
+                money: faker.number.int({max: 100}),
+            });
+    
+        expect(response.status).toBe(httpStatus.BAD_REQUEST);
+        expect(response.body).toEqual(expect.arrayContaining([
+            '"name" is required'
+        ]));
+    });
+    
+    test('should return 400 when not select form payment', async () => {
+        const response = await server.post('/kitchen')
+            .send({
+                name: faker.person.firstName(),
+                foodId: faker.number.int({max: 100}),
+                money: faker.number.int({max: 100}),
+            });
+    
+        expect(response.status).toBe(httpStatus.BAD_REQUEST);
+        expect(response.body).toEqual(expect.arrayContaining([
+            '"payment" is required'
+        ]));
+    });
+    
+    test('should return 201 when request food confirmed', async () => {
+        const food = await createFood();
 
-    expect(response.status).toBe(httpStatus.BAD_REQUEST);
-    expect(response.body).toEqual(expect.arrayContaining([
-        '"name" is required'
-    ]));
-});
-
-test('should return 400 when not select form payment', async () => {
-    const response = await server.post('/payment')
-        .send({
-            name: faker.person.firstName(),
-            codeRequest: faker.number.int({ max: 1000 }),
-            codeFood: faker.number.int({ max: 1000 })
-        });
-
-    expect(response.status).toBe(httpStatus.BAD_REQUEST);
-    expect(response.body).toEqual(expect.arrayContaining([
-        '"formPayment" is required'
-    ]));
-});
-
-test('should return 201 when request food confirmed', async () => {
-    const response = await server.post('/payment')
-        .send({
-            formPayment: 'CREDIT',
-            name: faker.person.firstName(),
-            codeRequest: faker.number.int({ max: 1000 }),
-            codeFood: faker.number.int({ max: 1000 })
-        });
-
-    expect(response.status).toBe(httpStatus.CREATED);
+        const response = await server.post('/kitchen')
+            .send({
+                payment: 'CREDIT',
+                name: faker.person.firstName(),
+                foodId: food.id,
+                money: faker.finance.amount({max:10000}),
+            });
+        console.log(response.body);
+        expect(response.status).toBe(httpStatus.CREATED);
+    });
 });
