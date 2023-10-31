@@ -16,9 +16,9 @@ async function createDefaultFood() {
         data: {
             name: 'Hambúrguer',
             description: '2x hambúrguer 200g, queijo cheddar, tomate, alface, picles, cebola, molho da casa',
-            categoryId: 'COMBOS',
+            category: 'COMBOS',
             price: 3050,
-            code: 200
+            code: '200'
         }
     });
 
