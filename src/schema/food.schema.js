@@ -1,8 +1,7 @@
-import Joi from "joi";
+import Joi from 'joi';
 
 const foodSchema = Joi.object({
-    name: Joi.string(),
-    code: Joi.number().integer()
+    code: Joi.string()
 })
 
 export default foodSchema

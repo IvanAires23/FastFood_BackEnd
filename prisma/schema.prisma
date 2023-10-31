@@ -9,25 +9,16 @@ datasource db {
 
 model Food {
   id             Int       @id @default(autoincrement())
-  categoryId     Int
-  Catergory      Category  @relation(fields: [categoryId], references: [id])
+  category       Category
   price          Int
   name           String
   subDescription String
   description    String
-  code           Int
+  code           String
   image          String
   Kitchen        Kitchen[]
 
   @@map("foods")
-}
-
-model Category {
-  id   Int    @id @default(autoincrement())
-  name String
-  Food Food[]
-
-  @@map("categories")
 }
 
 model Kitchen {
@@ -44,4 +35,11 @@ model Kitchen {
 enum StatusPreparation {
   PEDDING
   READY
+}
+
+enum Category {
+  COMBOS
+  FOLLOWUP
+  DRINKS
+  DESSERTS
 }

@@ -1,34 +1,31 @@
-import prisma from "../config/database.js";
+import prisma from '../config/database.js';
 
 async function findAllFood() {
     return prisma.food.findMany()
 }
 
-async function findFoodByNameOrCode(name, code) {
+async function findFoodByNameOrCode(code) {
     return prisma.food.findMany({
         where: {
             OR: [
-                {
-                    code
-                },
-                {
-                    name
-                }
-            ]
+                { code },
+                { name: code }
+            ],
+
         }
     })
 }
 
 async function create(body) {
-    return prisma.category.create({
+    return prisma.food.create({
         data: {
             code: body.code,
             description: body.description,
             image: body.image,
             name: body.name,
             price: body.price,
-            categoryId: body.categoryId,
-            subDescription: body.subDescription
+            subDescription: body.subDescription,
+            category: body.category
         }
     })
 }

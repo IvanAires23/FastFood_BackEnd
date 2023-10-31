@@ -1,5 +1,5 @@
-import httpStatus from "http-status";
-import foodService from "../service/food.service.js";
+import httpStatus from 'http-status';
+import foodService from '../service/food.service.js';
 
 async function findAllFood(req, res) {
     try {
@@ -11,12 +11,15 @@ async function findAllFood(req, res) {
 }
 
 async function findFoodByNameOrCode(req, res) {
-    const { name, code } = req.body
+    const { code } = req.body
 
     try {
-        const food = await foodService.findFoodByNameOrCode(name, code)
+        const food = await foodService.findFoodByNameOrCode(code)
         res.status(httpStatus.OK).send(food)
     } catch (err) {
+        if (err.name === 'notFound') {
+            return res.status(httpStatus.NOT_FOUND).send(err.message)
+        }
         res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 }

@@ -1,9 +1,9 @@
-import prisma from "../src/config/database.js";
+import prisma from '../src/config/database.js';
 
 async function getDefaultFood() {
     const food = await prisma.food.findFirst({
         where: {
-            name: "Hambúrguer"
+            name: 'Hambúrguer'
         }
     });
 
@@ -11,13 +11,12 @@ async function getDefaultFood() {
 }
 
 async function createDefaultFood() {
-    console.log("Creating default food!");
-    const category = await createDefaultCategory()
+    console.log('Creating default food!');
     const food = await prisma.food.createMany({
         data: {
-            name: "Hambúrguer",
-            description: "2x hambúrguer 200g, queijo cheddar, tomate, alface, picles, cebola, molho da casa",
-            categoryId: category.id,
+            name: 'Hambúrguer',
+            description: '2x hambúrguer 200g, queijo cheddar, tomate, alface, picles, cebola, molho da casa',
+            categoryId: 'COMBOS',
             price: 3050,
             code: 200
         }
@@ -26,26 +25,16 @@ async function createDefaultFood() {
     return food;
 }
 
-async function createDefaultCategory() {
-    const category = await prisma.category.create({
-        data: {
-            name: "Combos"
-        }
-    })
-
-    return category
-}
-
 async function checkOrCreateDefaultFood() {
     const food = await getDefaultFood();
     if (!food) await createDefaultFood();
-    else console.log("Default food already created.");
+    else console.log('Default food already created.');
 
     return food;
 }
 
 // execução
 (async () => {
-    console.log("executing system");
+    console.log('executing system');
     await checkOrCreateDefaultFood();
 })(); // IIFE
