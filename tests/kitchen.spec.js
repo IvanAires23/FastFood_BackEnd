@@ -3,8 +3,9 @@ import supertest from 'supertest';
 import app from '../src/app';
 import { faker } from '@faker-js/faker';
 import httpStatus from 'http-status';
-import createFood from './factories/food.fatory';
-import cleanDB from './helpers/cleanDb';
+import createFood from './factories/food.fatory.js';
+import cleanDB from './helpers/cleanDb.js';
+import createKitchen from './factories/kitchen.factory.js';
 
 const server = supertest(app);
 
@@ -82,5 +83,16 @@ describe('POST /kitchen', () => {
                 change: faker.finance.amount(5, 10),
             });
         expect(response.status).toBe(httpStatus.CREATED);
+    });
+});
+
+describe('/GET kitchen', () => {
+    test('should return 200 when find all kitchen', async () => {
+        await createKitchen();
+
+        const response = await server.get('/kitchen');
+
+        expect(response.status).toBe(httpStatus.OK);
+        expect(response.body).toHaveLength(1);
     });
 });
