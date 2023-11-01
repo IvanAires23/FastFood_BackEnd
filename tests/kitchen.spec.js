@@ -88,6 +88,17 @@ describe('POST /kitchen', () => {
 
 describe('/GET kitchen', () => {
 
+    test('should return 400 when asked to prepare a ready order', async () => {
+        const kitchen = await createKitchen('READY');
+
+        const response = await server.post('/kitchen/ready')
+            .send({
+                kitchenId: kitchen.id
+            });
+    
+        expect(response.status).toBe(httpStatus.BAD_REQUEST);
+    });
+
     test('should return 404 when mot found food', async () => {
         const response = await server.post('/kitchen/1');
 
