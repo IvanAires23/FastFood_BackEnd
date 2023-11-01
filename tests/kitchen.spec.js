@@ -87,6 +87,13 @@ describe('POST /kitchen', () => {
 });
 
 describe('/GET kitchen', () => {
+
+    test('should return 404 when mot found food', async () => {
+        const response = await server.post('/kitchen/1');
+
+        expect(response.status).toBe(httpStatus.NOT_FOUND);
+    });
+
     test('should return 200 when find all kitchen', async () => {
         await createKitchen();
 
