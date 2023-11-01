@@ -10,6 +10,6 @@ export const kitchenSchema = Joi.object({
     quant: Joi.number().integer().required()
 });
 
-export const kitchenReadySchema = Joi.object({
+export const kitchenIdSchema = Joi.object({
     id: Joi.number().integer().required()
 });

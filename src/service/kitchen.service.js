@@ -31,6 +31,13 @@ async function readyKitchen(id){
     return update;
 }
 
+async function deleteKitchen(id){
+    const kitchen = await kitchenRepository.findKitchenById(id);
+    if(!kitchen) throw {name: 'notFound', message: 'Not found kitchen'};
+
+    return await kitchenRepository.deleteKitchen(id);
+}
+
 async function findAll(){
     const kitchen = await kitchenRepository.findAll();
     return kitchen;
@@ -40,6 +47,7 @@ const kitchenService = {
     create,
     findFoodInKitchen,
     readyKitchen,
+    deleteKitchen,
     findAll
 };
 

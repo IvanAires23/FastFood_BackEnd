@@ -33,11 +33,20 @@ async function readyKitchen(id){
     });
 }
 
+async function deleteKitchen(id){
+    return prisma.kitchen.delete({
+        where: {
+            id
+        }
+    });
+}
+
 const kitchenRepository = {
     create,
     readyKitchen,
     findAll,
-    findKitchenById
+    findKitchenById,
+    deleteKitchen
 };
 
 export default kitchenRepository;

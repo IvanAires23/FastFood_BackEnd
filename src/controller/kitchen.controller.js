@@ -35,6 +35,19 @@ async function readyKitchen(req, res){
     }
 }
 
+async function deleteKitchen(req, res){
+    const { id } = req.body;
+
+    try {
+        await kitchenService.deleteKitchen(id);
+        res.sendStatus(httpStatus.OK);
+    } catch (err) {
+        if(err.name === 'notFound') return res.status(httpStatus.NOT_FOUND).send(err);
+
+        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
 async function findFoodInKitchen(req, res){
 
     const { foodId } = req.params;
@@ -54,6 +67,7 @@ const kitchenController = {
     findAll,
     findFoodInKitchen,
     readyKitchen,
+    deleteKitchen,
 };
 
 export default kitchenController;
