@@ -28,7 +28,7 @@ model Kitchen {
   Food        Food              @relation(fields: [foodId], references: [id])
   observation String?
   preparation StatusPreparation
-  change      String
+  change      Int
   payment     PaymentForm
 
   @@map("kitchen")

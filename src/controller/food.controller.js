@@ -24,6 +24,18 @@ async function findFoodByNameOrCode(req, res) {
     }
 }
 
+async function findByCategory(req, res){
+
+    const { category } = req.body;
+
+    try{
+        const food = await foodService.findByCategory(category);
+        res.status(httpStatus.OK).send(food);
+    }catch(err){
+        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
 async function create(req, res) {
     try {
         const food = await foodService.create(req.body);
@@ -36,6 +48,7 @@ async function create(req, res) {
 const foodController = {
     findAllFood,
     findFoodByNameOrCode,
+    findByCategory,
     create
 };
 

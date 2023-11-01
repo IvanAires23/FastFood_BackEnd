@@ -13,7 +13,7 @@
     "test:load-envs": "dotenv -e .env.test",
     "test:migration:run": "npm run test:load-envs prisma migrate deploy",
     "test:migration:generate": "npm run test:load-envs prisma migrate dev",
-    "test": "jest"
+    "test": "npm run test:load-envs -- jest -- --passWithNoTests"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

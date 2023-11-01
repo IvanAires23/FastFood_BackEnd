@@ -11,6 +11,11 @@ async function findFoodByNameOrCode(code) {
     return food;
 }
 
+async function findByCategory(category) {
+    const food = await foodRepository.findByCategory(category);
+    return food;
+}
+
 async function create(body) {
     const food = await foodRepository.create(body);
     return food;
@@ -19,6 +24,7 @@ async function create(body) {
 const foodService = {
     findAllFood,
     findFoodByNameOrCode,
+    findByCategory,
     create
 };
 

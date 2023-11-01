@@ -34,10 +34,19 @@ async function create(body) {
     });
 }
 
+async function findByCategory(category){
+    return prisma.food.findMany({
+        where: {
+            category
+        }
+    });
+}
+
 const foodRepository = {
     findAllFood,
     findFoodByNameOrCode,
     findById,
+    findByCategory,
     create
 };
 

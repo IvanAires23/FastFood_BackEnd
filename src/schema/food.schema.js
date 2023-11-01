@@ -1,7 +1,10 @@
 import Joi from 'joi';
 
-const foodSchema = Joi.object({
+export const foodSchema = Joi.object({
     code: Joi.string()
 });
 
-export default foodSchema;
+export const categoryFoodSchema = Joi.object({
+    category: Joi.string().equal('COMBOS', 'DESSERTS', 'DRINKS', 'FOLLOWUP').required()
+});
+

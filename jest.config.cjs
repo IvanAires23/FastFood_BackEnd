@@ -1,9 +1,8 @@
 module.exports = {
-    clearMocks: true,
-    collectCoverage: true,
-    coverageDirectory: 'coverage',
-    coverageProvider: 'v8',
     testMatch: [
-        '**/tests/**/*.spec.js?(x)'
+        '*/tests//.spec.js'
     ],
+    transform: {
+        '^.+\\.js$': 'babel-jest',
+    },
 };

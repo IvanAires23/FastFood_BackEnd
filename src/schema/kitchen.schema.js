@@ -5,7 +5,7 @@ const kitchenSchema = Joi.object({
     payment: Joi.string().equal('CREDIT', 'DEBIT', 'MONEY').required(),
     name: Joi.string().required().required(),
     foodId: Joi.number().integer().required(),
-    change: Joi.string().required(),
+    change: Joi.number().integer().required(),
     observation: Joi.string(),
 });
 
