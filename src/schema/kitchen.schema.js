@@ -7,6 +7,7 @@ const kitchenSchema = Joi.object({
     foodId: Joi.number().integer().required(),
     change: Joi.number().integer().required(),
     observation: Joi.string(),
+    quant: Joi.number().integer().required()
 });
 
 export default kitchenSchema;

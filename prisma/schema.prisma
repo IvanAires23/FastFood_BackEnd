@@ -26,6 +26,7 @@ model Kitchen {
   nameUser    String
   foodId      Int
   Food        Food              @relation(fields: [foodId], references: [id])
+  quant       Int
   observation String?
   preparation StatusPreparation
   change      Int
@@ -35,7 +36,7 @@ model Kitchen {
 }
 
 enum StatusPreparation {
-  PEDDING
+  PREPARING
   READY
 }
 

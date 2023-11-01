@@ -4,11 +4,12 @@ async function create(body){
     return prisma.kitchen.create({
         data:{
             nameUser: body.name,
-            preparation: 'PEDDING',
+            preparation: 'PREPARING',
             foodId: body.foodId,
             observation: body.observation,
             change: body.change,
-            payment: body.payment
+            payment: body.payment,
+            quant: body.quant
         }
     });
 }
