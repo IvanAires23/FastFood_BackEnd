@@ -7,5 +7,6 @@ const kitchenRouter = Router();
 
 kitchenRouter.post('/', validateBody(kitchenSchema), kitchenController.create);
 kitchenRouter.get('/', kitchenController.findAll);
+kitchenRouter.get('/:foodId', kitchenController.findFoodInKitchen);
 
 export default kitchenRouter;

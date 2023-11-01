@@ -21,9 +21,24 @@ async function findAll(req, res){
     }
 }
 
+async function findFoodInKitchen(req, res){
+
+    const { foodId } = req.params;
+
+    try {
+        
+        const food = await kitchenService.findFoodInKitchen(foodId);
+        res.status(httpStatus.OK).send(food);
+    } catch (err) {
+        if(err.name === 'notFound') return res.status(httpStatus.NOT_FOUND).send(err);
+        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
 const kitchenController = {
     create,
-    findAll
+    findAll,
+    findFoodInKitchen,
 };
 
 export default kitchenController;

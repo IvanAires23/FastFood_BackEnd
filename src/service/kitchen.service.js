@@ -12,6 +12,16 @@ async function create(body){
     return kitchen;
 }
 
+async function findFoodInKitchen(foodId){
+
+    const id = parseInt(foodId);
+
+    const food = await foodRepository.findById(id);
+    if(!food) throw { name: 'notFound', message: 'Food not found' };
+
+    return food;
+}
+
 async function findAll(){
     const kitchen = await kitchenRepository.findAll();
     return kitchen;
@@ -19,6 +29,7 @@ async function findAll(){
 
 const kitchenService = {
     create,
+    findFoodInKitchen,
     findAll
 };
 
