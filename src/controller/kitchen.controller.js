@@ -21,6 +21,20 @@ async function findAll(req, res){
     }
 }
 
+async function readyKitchen(req, res){
+    const { id } = req.body;
+
+    try {
+        const update = await kitchenService.readyKitchen(id);
+        res.status(httpStatus.OK).send(update);
+    } catch (err) {
+        if(err.name === 'badRequest') return res.status(httpStatus.BAD_REQUEST).send(err);
+        else if(err.name === 'notFound') return res.status(httpStatus.NOT_FOUND).send(err);
+
+        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
 async function findFoodInKitchen(req, res){
 
     const { foodId } = req.params;
@@ -39,6 +53,7 @@ const kitchenController = {
     create,
     findAll,
     findFoodInKitchen,
+    readyKitchen,
 };
 
 export default kitchenController;

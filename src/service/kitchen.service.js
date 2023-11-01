@@ -22,6 +22,15 @@ async function findFoodInKitchen(foodId){
     return food;
 }
 
+async function readyKitchen(id){
+    const kitchen = await kitchenRepository.findKitchenById(id);
+    if(!kitchen) throw {name: 'notFound', message: 'Not found kitchen'};
+    else if (kitchen.preparation === 'READY') throw {name: 'badRequest', message: 'Request already ready'};
+
+    const update = await kitchenRepository.readyKitchen(id);
+    return update;
+}
+
 async function findAll(){
     const kitchen = await kitchenRepository.findAll();
     return kitchen;
@@ -30,6 +39,7 @@ async function findAll(){
 const kitchenService = {
     create,
     findFoodInKitchen,
+    readyKitchen,
     findAll
 };
 
