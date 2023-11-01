@@ -7,8 +7,8 @@ const kitchenRouter = Router();
 
 kitchenRouter.post('/', validateBody(kitchenSchema), kitchenController.create);
 kitchenRouter.post('/ready', validateBody(kitchenIdSchema), kitchenController.readyKitchen);
+kitchenRouter.post('/delete', validateBody(kitchenIdSchema), kitchenController.deleteKitchen);
 kitchenRouter.get('/', kitchenController.findAll);
 kitchenRouter.get('/:foodId', kitchenController.findFoodInKitchen);
-kitchenRouter.delete('/', validateBody(kitchenIdSchema), kitchenController.deleteKitchen);
 
 export default kitchenRouter;
