@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import foodController from '../controller/food.controller.js'
 import validateBody from '../middleware/validateBody.middleware.js'
-import { foodSchema, categoryFoodSchema } from '../schema/food.schema.js'
+import { foodSchema, categoryFoodSchema, createFoodSchema } from '../schema/food.schema.js'
 
 const foodRouter = Router()
 
@@ -16,6 +16,6 @@ foodRouter.post(
     validateBody(foodSchema),
     foodController.findFoodByNameOrCode
 )
-foodRouter.post('/create', foodController.create)
+foodRouter.post('/create', validateBody(createFoodSchema), foodController.create)
 
 export default foodRouter
