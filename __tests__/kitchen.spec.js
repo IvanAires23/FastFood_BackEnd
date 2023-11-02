@@ -71,7 +71,7 @@ describe('POST /kitchen', () => {
         expect(response.status).toBe(httpStatus.NOT_FOUND)
         expect(response.body).toEqual({
             name: 'notFound',
-            message: 'Food not found',
+            message: 'Not Found Food' 
         })
     })
 
