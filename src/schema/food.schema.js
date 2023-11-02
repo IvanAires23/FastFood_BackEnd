@@ -1,10 +1,11 @@
-import Joi from 'joi';
+import Joi from 'joi'
 
 export const foodSchema = Joi.object({
-    code: Joi.string()
-});
+    code: Joi.string(),
+})
 
 export const categoryFoodSchema = Joi.object({
-    category: Joi.string().equal('COMBOS', 'DESSERTS', 'DRINKS', 'FOLLOWUP').required()
-});
-
+    category: Joi.string()
+        .equal('COMBOS', 'DESSERTS', 'DRINKS', 'FOLLOWUP')
+        .required(),
+})

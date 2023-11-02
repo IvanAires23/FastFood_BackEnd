@@ -14,7 +14,7 @@
     "test:load-envs": "dotenv -e .env.test",
     "test:migration:run": "npm run test:load-envs prisma migrate deploy",
     "test:migration:generate": "npm run test:load-envs prisma migrate dev",
-    "test": "jest --passWithNoTests"
+    "test": "cross-env NODE_ENV=test jest --passWithNoTests"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -40,8 +40,13 @@
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.52.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "faker": "^6.6.6",
     "nodemon": "^3.0.1",
+    "prettier": "^3.0.3",
     "prisma": "^5.1.1"
   }
 }
