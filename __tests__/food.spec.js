@@ -85,4 +85,28 @@ describe('POST /food', () => {
         expect(response.status).toBe(httpStatus.OK)
         expect(response.body).toHaveLength(1)
     })
+
+    test('should return 201 when create food', async () => {
+        const response = await server.post('/food/create').send({
+            code: faker.finance.amount(100, 1000, 0),
+            description: faker.lorem.words(10),
+            image: faker.image.url(),
+            name: faker.lorem.word(),
+            price: faker.number.int({max: 100}),
+            subDescription: faker.lorem.words(3),
+            category: 'COMBOS',
+        })
+
+        expect(response.status).toBe(httpStatus.CREATED)
+    })
+
+    test('should return 200 when find food category', async () => {
+        const food = await createFood()
+
+        const response = await server.post('/food/category').send({ category: food.category })
+
+        expect(response.status).toBe(httpStatus.OK)
+        expect(response.body).toHaveLength(1)
+    })
+
 })
