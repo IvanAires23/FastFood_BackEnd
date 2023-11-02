@@ -91,23 +91,94 @@ describe('POST /kitchen', () => {
     })
 })
 
-describe('/GET kitchen', () => {
+describe('/POST kitchen/ready', () => {
     test('should return 400 when asked to prepare a ready order', async () => {
         const food = await createFood()
         const kitchen = await createKitchen('READY', food.id)
 
         const response = await server.post('/kitchen/ready').send({
-            kitchenId: kitchen.id,
+            id: kitchen.id,
         })
 
         expect(response.status).toBe(httpStatus.BAD_REQUEST)
     })
 
-    test('should return 404 when mot found food', async () => {
-        const response = await server.post('/kitchen/1')
+    test('should return 404 when not found kitchen', async () => {
+        const response = await server.post('/kitchen/ready').send({
+            id: faker.number.int({ max: 10 }),
+        })
 
         expect(response.status).toBe(httpStatus.NOT_FOUND)
+        expect(response.body).toEqual({
+            name: 'notFound',
+            message: 'Not found kitchen'
+        })
     })
+
+    test('should return 200 when updated in kitchen', async () => {
+        const food = await createFood()
+        const kitchen = await createKitchen('PREPARING', food.id)
+
+        const response = await server.post('/kitchen/ready').send({
+            id: kitchen.id,
+        })
+
+        expect(response.status).toBe(httpStatus.OK)
+    })
+
+})
+
+describe('/POST kitchen/delete', () => {
+    test('should return 404 when not found kitchen', async () => {
+        const response = await server.post('/kitchen/delete').send({
+            id: faker.number.int({max: 10}),
+        })
+
+        expect(response.status).toBe(httpStatus.NOT_FOUND)
+        expect(response.body).toEqual({
+            name: 'notFound',
+            message: 'Not found kitchen'
+        })
+    })
+
+    test('should return 200 when deleted kitchen', async () => {
+        const food = await createFood()
+        const kitchen = await createKitchen('PREPARING', food.id)
+
+        const response = await server.post('/kitchen/delete').send({
+            id: kitchen.id,
+        })
+
+        expect(response.status).toBe(httpStatus.OK)
+    })
+
+})
+
+describe('/GET kitchen/:foodId', () => {
+    test('should return 404 when not found kitchen', async () => {
+
+        const response = await server.get(`/kitchen/${faker.number.int({max: 10})}`)
+
+        expect(response.status).toBe(httpStatus.NOT_FOUND)
+        expect(response.body).toEqual({
+        name: 'notFound',
+        message: 'Not Found Food'
+        })
+    })
+
+    test('should return 200 when find food in kitchen', async () => {
+        const food = await createFood()
+        await createKitchen('PREPARING', food.id)
+
+        const response = await server.get(`/kitchen/${food.id}`)
+
+        expect(response.status).toBe(httpStatus.OK)
+        expect(response.body).toEqual(food)
+    })
+
+})
+
+describe('/GET kitchen', () => {
 
     test('should return 200 when find all kitchen', async () => {
         const food = await createFood()
