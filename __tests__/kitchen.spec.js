@@ -25,6 +25,7 @@ describe('POST /kitchen', () => {
                 '"name" is required',
                 '"foodId" is required',
                 '"change" is required',
+                '"quant" is required'
             ])
         )
     })
@@ -60,10 +61,12 @@ describe('POST /kitchen', () => {
     test('should return 404 when not found food', async () => {
         const response = await server.post('/kitchen').send({
             payment: 'CREDIT',
+            change: faker.number.int({min: 10, max: 50}),
             name: faker.person.firstName(),
-            foodId: faker.number.int({ max: 100 }),
-            money: faker.finance.amount({ max: 10000 }),
-            change: faker.finance.amount(5, 10),
+            payment: 'MONEY',
+            money: faker.finance.amount(20, 30),
+            foodId: faker.number.int({ max: 10 }),
+            quant: faker.number.int({ max: 50 }),
         })
         expect(response.status).toBe(httpStatus.NOT_FOUND)
         expect(response.body).toEqual({
@@ -77,10 +80,12 @@ describe('POST /kitchen', () => {
 
         const response = await server.post('/kitchen').send({
             payment: 'CREDIT',
+            change: faker.number.int({min: 10, max: 50}),
             name: faker.person.firstName(),
+            payment: 'MONEY',
+            money: faker.finance.amount(20, 30),
             foodId: food.id,
-            money: faker.finance.amount({ max: 10000 }),
-            change: faker.finance.amount(5, 10),
+            quant: faker.number.int({ max: 50 }),
         })
         expect(response.status).toBe(httpStatus.CREATED)
     })
@@ -88,7 +93,8 @@ describe('POST /kitchen', () => {
 
 describe('/GET kitchen', () => {
     test('should return 400 when asked to prepare a ready order', async () => {
-        const kitchen = await createKitchen('READY')
+        const food = await createFood()
+        const kitchen = await createKitchen('READY', food.id)
 
         const response = await server.post('/kitchen/ready').send({
             kitchenId: kitchen.id,
@@ -104,7 +110,8 @@ describe('/GET kitchen', () => {
     })
 
     test('should return 200 when find all kitchen', async () => {
-        await createKitchen()
+        const food = await createFood()
+        await createKitchen('PREPARING', food.id)
 
         const response = await server.get('/kitchen')
 

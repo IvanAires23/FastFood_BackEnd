@@ -74,8 +74,6 @@ describe('POST /food', () => {
             .post('/food/category')
             .send({ category: faker.lorem.word() })
 
-        console.log(response.body)
-
         expect(response.status).toBe(httpStatus.BAD_REQUEST)
     })
 
