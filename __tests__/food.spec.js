@@ -38,6 +38,52 @@ describe('GET /food', () => {
 })
 
 describe('POST /food', () => {
+    test('should return 400 when send body incorrect', async () => {
+        const response = await server.post('/food/create').send({})
+
+        expect(response.status).toBe(httpStatus.BAD_REQUEST)
+        expect(response.body).toEqual([
+            '"code" is required',
+            '"description" is required',
+            '"image" is required',
+            '"name" is required',
+            '"price" is required',
+            '"subDescription" is required',
+            '"category" is required',
+        ])
+    })
+
+    test('should return 400 when not send code', async () => {
+        const response = await server.post('/food').send({})
+
+        expect(response.status).toBe(httpStatus.BAD_REQUEST)
+        expect(response.body).toEqual(['"code" is required'])
+    })
+
+    test('should return 404 when not found food by name', async () => {
+        const response = await server
+            .post('/food')
+            .send({ code: faker.lorem.word() })
+
+        expect(response.status).toBe(httpStatus.NOT_FOUND)
+        expect(response.body).toEqual({
+            name: 'notFound',
+            message: 'Not Found Food',
+        })
+    })
+
+    test('should return 404 when not found food by code', async () => {
+        const response = await server
+            .post('/food')
+            .send({ code: faker.number.int({ min: 100, max: 1000 }) })
+
+        expect(response.status).toBe(httpStatus.NOT_FOUND)
+        expect(response.body).toEqual({
+            name: 'notFound',
+            message: 'Not Found Food',
+        })
+    })
+
     test('should return 404 when not found food by category', async () => {
         const response = await server
             .post('/food/category')

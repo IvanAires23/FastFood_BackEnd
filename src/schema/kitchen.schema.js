@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from 'joi'
 
 export const kitchenSchema = Joi.object({
     money: Joi.string().required(),
@@ -7,9 +7,9 @@ export const kitchenSchema = Joi.object({
     foodId: Joi.number().integer().required(),
     change: Joi.number().integer().required(),
     observation: Joi.string(),
-    quant: Joi.number().integer().required()
-});
+    quant: Joi.number().integer().required(),
+})
 
 export const kitchenIdSchema = Joi.object({
-    id: Joi.number().integer().required()
-});
+    id: Joi.number().integer().required(),
+})
