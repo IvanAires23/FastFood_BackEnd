@@ -14,6 +14,7 @@
     "test:load-envs": "dotenv -e .env.test",
     "test:migration:run": "npm run test:load-envs prisma migrate deploy",
     "test:migration:generate": "npm run test:load-envs prisma migrate dev",
+    "test:cov":"cross-env NODE_ENV=test jest --coverage --passWithNoTests",
     "test": "cross-env NODE_ENV=test jest --passWithNoTests"
   },
   "prisma": {

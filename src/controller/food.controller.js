@@ -18,7 +18,7 @@ async function findFoodByNameOrCode(req, res) {
         return res.status(httpStatus.OK).send(food)
     } catch (err) {
         if (err.name === 'notFound') {
-            return res.status(httpStatus.NOT_FOUND).send(err.message)
+            return res.status(httpStatus.NOT_FOUND).send(err)
         }
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
