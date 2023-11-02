@@ -1,10 +1,10 @@
-import { Router } from 'express';
-import foodRouter from './food.routes.js';
-import kitchenRouter from './kitchen.routes.js';
+import { Router } from 'express'
+import foodRouter from './food.routes.js'
+import kitchenRouter from './kitchen.routes.js'
 
-const router = Router();
+const router = Router()
 
-router.use('/food', foodRouter);
-router.use('/kitchen', kitchenRouter);
+router.use('/food', foodRouter)
+router.use('/kitchen', kitchenRouter)
 
-export default router;
+export default router

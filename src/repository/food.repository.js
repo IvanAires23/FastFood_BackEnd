@@ -1,23 +1,19 @@
-import prisma from '../config/database.js';
+import prisma from '../config/database.js'
 
 async function findAllFood() {
-    return prisma.food.findMany();
+    return prisma.food.findMany()
 }
 
 async function findFoodByNameOrCode(code) {
     return prisma.food.findMany({
         where: {
-            OR: [
-                { code },
-                { name: code }
-            ],
-
-        }
-    });
+            OR: [{ code }, { name: code }],
+        },
+    })
 }
 
-async function findById(id){
-    return prisma.food.findFirst({ where: { id } });
+async function findById(id) {
+    return prisma.food.findFirst({ where: { id } })
 }
 
 async function create(body) {
@@ -29,17 +25,17 @@ async function create(body) {
             name: body.name,
             price: body.price,
             subDescription: body.subDescription,
-            category: body.category
-        }
-    });
+            category: body.category,
+        },
+    })
 }
 
-async function findByCategory(category){
+async function findByCategory(category) {
     return prisma.food.findMany({
         where: {
-            category
-        }
-    });
+            category,
+        },
+    })
 }
 
 const foodRepository = {
@@ -47,7 +43,7 @@ const foodRepository = {
     findFoodByNameOrCode,
     findById,
     findByCategory,
-    create
-};
+    create,
+}
 
-export default foodRepository;
+export default foodRepository

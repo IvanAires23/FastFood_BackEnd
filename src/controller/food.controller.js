@@ -1,47 +1,46 @@
-import httpStatus from 'http-status';
-import foodService from '../service/food.service.js';
+import httpStatus from 'http-status'
+import foodService from '../service/food.service.js'
 
 async function findAllFood(req, res) {
     try {
-        const foods = await foodService.findAllFood();
-        res.status(httpStatus.OK).send(foods);
+        const foods = await foodService.findAllFood()
+        return res.status(httpStatus.OK).send(foods)
     } catch (err) {
-        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 }
 
 async function findFoodByNameOrCode(req, res) {
-    const { code } = req.body;
+    const { code } = req.body
 
     try {
-        const food = await foodService.findFoodByNameOrCode(code);
-        res.status(httpStatus.OK).send(food);
+        const food = await foodService.findFoodByNameOrCode(code)
+        return res.status(httpStatus.OK).send(food)
     } catch (err) {
         if (err.name === 'notFound') {
-            return res.status(httpStatus.NOT_FOUND).send(err.message);
+            return res.status(httpStatus.NOT_FOUND).send(err.message)
         }
-        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 }
 
-async function findByCategory(req, res){
+async function findByCategory(req, res) {
+    const { category } = req.body
 
-    const { category } = req.body;
-
-    try{
-        const food = await foodService.findByCategory(category);
-        res.status(httpStatus.OK).send(food);
-    }catch(err){
-        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    try {
+        const food = await foodService.findByCategory(category)
+        return res.status(httpStatus.OK).send(food)
+    } catch (err) {
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 }
 
 async function create(req, res) {
     try {
-        const food = await foodService.create(req.body);
-        res.status(httpStatus.CREATED).send(food);
+        const food = await foodService.create(req.body)
+        return res.status(httpStatus.CREATED).send(food)
     } catch (err) {
-        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 }
 
@@ -49,7 +48,7 @@ const foodController = {
     findAllFood,
     findFoodByNameOrCode,
     findByCategory,
-    create
-};
+    create,
+}
 
-export default foodController;
+export default foodController

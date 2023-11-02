@@ -1,16 +1,16 @@
-import { faker } from '@faker-js/faker';
-import prisma from '../../src/config/database';
+import { faker } from '@faker-js/faker'
+import prisma from '../../src/config/database.js'
 
-async function createKitchen(StatusPreparation){
+async function createKitchen(StatusPreparation) {
     return prisma.kitchen.create({
-        data:{
+        data: {
             change: faker.finance.amount(5, 10),
             nameUser: faker.person.firstName(),
             payment: 'MONEY',
             preparation: StatusPreparation,
-            foodId: faker.number.int({max: 10}),
-        }
-    });
+            foodId: faker.number.int({ max: 10 }),
+        },
+    })
 }
 
-export default createKitchen;
+export default createKitchen

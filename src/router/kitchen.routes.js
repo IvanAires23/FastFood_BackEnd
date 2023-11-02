@@ -1,14 +1,22 @@
-import { Router } from 'express';
-import validateBody from '../middleware/validateBody.middleware.js';
-import { kitchenSchema, kitchenIdSchema } from '../schema/kitchen.schema.js';
-import kitchenController from '../controller/kitchen.controller.js';
+import { Router } from 'express'
+import validateBody from '../middleware/validateBody.middleware.js'
+import { kitchenSchema, kitchenIdSchema } from '../schema/kitchen.schema.js'
+import kitchenController from '../controller/kitchen.controller.js'
 
-const kitchenRouter = Router();
+const kitchenRouter = Router()
 
-kitchenRouter.post('/', validateBody(kitchenSchema), kitchenController.create);
-kitchenRouter.post('/ready', validateBody(kitchenIdSchema), kitchenController.readyKitchen);
-kitchenRouter.post('/delete', validateBody(kitchenIdSchema), kitchenController.deleteKitchen);
-kitchenRouter.get('/', kitchenController.findAll);
-kitchenRouter.get('/:foodId', kitchenController.findFoodInKitchen);
+kitchenRouter.post('/', validateBody(kitchenSchema), kitchenController.create)
+kitchenRouter.post(
+    '/ready',
+    validateBody(kitchenIdSchema),
+    kitchenController.readyKitchen
+)
+kitchenRouter.post(
+    '/delete',
+    validateBody(kitchenIdSchema),
+    kitchenController.deleteKitchen
+)
+kitchenRouter.get('/', kitchenController.findAll)
+kitchenRouter.get('/:foodId', kitchenController.findFoodInKitchen)
 
-export default kitchenRouter;
+export default kitchenRouter

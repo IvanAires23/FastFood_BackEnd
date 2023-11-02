@@ -1,46 +1,46 @@
-import foodRepository from '../repository/food.repository.js';
-import kitchenRepository from '../repository/kitchen.repository.js';
+import notFoundFood from '../errors/notFoundFood.error.js'
+import notFoundKitchen from '../errors/notFoundKitchen.error.js'
+import requestReady from '../errors/requestReady.error.js'
+import foodRepository from '../repository/food.repository.js'
+import kitchenRepository from '../repository/kitchen.repository.js'
 
-async function create(body){
-    if(body.name === '') throw { name: 'badRequest', message: 'Your name is required' };
-    else if(body.payment === '') throw {name: 'badRequest', message: 'Method payment is required'};
+async function create(body) {
+    const food = await foodRepository.findById(body.foodId)
+    if (!food) throw notFoundFood()
 
-    const food = await foodRepository.findById(body.foodId);
-    if(!food) throw { name: 'notFound', message: 'Food not found' };
-
-    const kitchen = await kitchenRepository.create(body);
-    return kitchen;
+    const kitchen = await kitchenRepository.create(body)
+    return kitchen
 }
 
-async function findFoodInKitchen(foodId){
+async function findFoodInKitchen(foodId) {
+    const id = parseInt(foodId, 10)
 
-    const id = parseInt(foodId);
+    const food = await foodRepository.findById(id)
+    if (!food) throw notFoundFood()
 
-    const food = await foodRepository.findById(id);
-    if(!food) throw { name: 'notFound', message: 'Food not found' };
-
-    return food;
+    return food
 }
 
-async function readyKitchen(id){
-    const kitchen = await kitchenRepository.findKitchenById(id);
-    if(!kitchen) throw {name: 'notFound', message: 'Not found kitchen'};
-    else if (kitchen.preparation === 'READY') throw {name: 'badRequest', message: 'Request already ready'};
+async function readyKitchen(id) {
+    const kitchen = await kitchenRepository.findKitchenById(id)
+    if (!kitchen) throw notFoundKitchen()
+    else if (kitchen.preparation === 'READY') throw requestReady()
 
-    const update = await kitchenRepository.readyKitchen(id);
-    return update;
+    const update = await kitchenRepository.readyKitchen(id)
+    return update
 }
 
-async function deleteKitchen(id){
-    const kitchen = await kitchenRepository.findKitchenById(id);
-    if(!kitchen) throw {name: 'notFound', message: 'Not found kitchen'};
+async function deleteKitchen(id) {
+    const kitchen = await kitchenRepository.findKitchenById(id)
+    if (!kitchen) throw notFoundKitchen()
 
-    return await kitchenRepository.deleteKitchen(id);
+    const kitchenDeleted = await kitchenRepository.deleteKitchen(id)
+    return kitchenDeleted
 }
 
-async function findAll(){
-    const kitchen = await kitchenRepository.findAll();
-    return kitchen;
+async function findAll() {
+    const kitchen = await kitchenRepository.findAll()
+    return kitchen
 }
 
 const kitchenService = {
@@ -48,7 +48,7 @@ const kitchenService = {
     findFoodInKitchen,
     readyKitchen,
     deleteKitchen,
-    findAll
-};
+    findAll,
+}
 
-export default kitchenService;
+export default kitchenService

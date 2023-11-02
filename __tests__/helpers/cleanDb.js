@@ -1,9 +1,8 @@
-import prisma from '../../src/config/database.js';
+import prisma from '../../src/config/database.js'
 
-async function cleanDB(){
-    prisma.kitchen.deleteMany();
-    prisma.food.deleteMany();
-    return;
+async function cleanDB() {
+    prisma.kitchen.deleteMany()
+    prisma.food.deleteMany()
 }
 
-export default cleanDB;
+export default cleanDB

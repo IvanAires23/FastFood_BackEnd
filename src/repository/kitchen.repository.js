@@ -1,44 +1,44 @@
-import prisma from '../config/database.js';
+import prisma from '../config/database.js'
 
-async function create(body){
+async function create(body) {
     return prisma.kitchen.create({
-        data:{
+        data: {
             nameUser: body.name,
             preparation: 'PREPARING',
             foodId: body.foodId,
             observation: body.observation,
             change: body.change,
             payment: body.payment,
-            quant: body.quant
-        }
-    });
+            quant: body.quant,
+        },
+    })
 }
 
-async function findAll(){
-    return prisma.kitchen.findMany();
+async function findAll() {
+    return prisma.kitchen.findMany()
 }
 
-async function findKitchenById(id){
-    return prisma.kitchen.findFirst({ where: { id } });
+async function findKitchenById(id) {
+    return prisma.kitchen.findFirst({ where: { id } })
 }
 
-async function readyKitchen(id){
+async function readyKitchen(id) {
     return prisma.kitchen.update({
         where: {
-            id
+            id,
         },
         data: {
-            preparation: 'READY'
-        }
-    });
+            preparation: 'READY',
+        },
+    })
 }
 
-async function deleteKitchen(id){
+async function deleteKitchen(id) {
     return prisma.kitchen.delete({
         where: {
-            id
-        }
-    });
+            id,
+        },
+    })
 }
 
 const kitchenRepository = {
@@ -46,7 +46,7 @@ const kitchenRepository = {
     readyKitchen,
     findAll,
     findKitchenById,
-    deleteKitchen
-};
+    deleteKitchen,
+}
 
-export default kitchenRepository;
+export default kitchenRepository

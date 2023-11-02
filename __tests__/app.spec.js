@@ -1,12 +1,13 @@
 /* eslint-disable no-undef */
-const supertest = require('supertest');
-import app from '../src/app';
-import httpStatus from 'http-status';
+import httpStatus from 'http-status'
+import app from '../src/app.js'
 
-const server = supertest(app);
+const supertest = require('supertest')
+
+const server = supertest(app)
 
 test('Test health', async () => {
-    const response = await server.get('/health');
+    const response = await server.get('/health')
 
-    expect(response.status).toBe(httpStatus.OK);
-});
+    expect(response.status).toBe(httpStatus.OK)
+})
