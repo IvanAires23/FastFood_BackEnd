@@ -30,7 +30,7 @@ describe('POST /kitchen', () => {
         )
     })
 
-    test('should return 400 when send value money incorrect', async () => {
+    test('should return 406 when send value money incorrect', async () => {
         const food = await createFood()
         const response = await server.post('/kitchen').send({
             name: faker.person.firstName(),
@@ -38,12 +38,35 @@ describe('POST /kitchen', () => {
             valueDelivery: faker.lorem.word(),
             change: faker.finance.amount(5, 10),
             quant: faker.number.int({ max: 50 }),
+            payment: 'MONEY',
+            change: faker.number.int({max: 500})
         })
 
         expect(response.status).toBe(httpStatus.NOT_ACCEPTABLE)
         expect(response.body).toEqual({
             name: 'notAcceptable',
-            message: 'Value is format incorrect'
+            message: 'Value delivered not acceptable'
+        })
+    })
+
+    test('should return 406 when the amount delivered is less than the change', async () => {
+        const valueDelivery = faker.finance.accountNumber(3)
+        const change = faker.number.int({min: 1000, max: 1200})
+        const food = await createFood()
+        const response = await server.post('/kitchen').send({
+            name: faker.person.firstName(),
+            foodId: food.id,
+            valueDelivery,
+            change: faker.finance.amount(5, 10),
+            quant: faker.number.int({ max: 50 }),
+            payment: 'MONEY',
+            change
+        })
+
+        expect(response.status).toBe(httpStatus.NOT_ACCEPTABLE)
+        expect(response.body).toEqual({
+            name: 'notAcceptable',
+            message: 'Value delivered not acceptable'
         })
     })
 
