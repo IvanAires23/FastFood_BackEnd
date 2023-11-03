@@ -1,3 +1,4 @@
+import notAcceptable from '../errors/notAcceptable.error.js'
 import notFoundFood from '../errors/notFoundFood.error.js'
 import notFoundKitchen from '../errors/notFoundKitchen.error.js'
 import requestReady from '../errors/requestReady.error.js'
@@ -7,6 +8,7 @@ import kitchenRepository from '../repository/kitchen.repository.js'
 async function create(body) {
     const food = await foodRepository.findById(body.foodId)
     if (!food) throw notFoundFood()
+    else if (!parseInt(body.valueDelivery)) throw notAcceptable()
 
     const kitchen = await kitchenRepository.create(body)
     return kitchen

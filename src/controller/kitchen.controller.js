@@ -6,8 +6,8 @@ async function create(req, res) {
         const kitchen = await kitchenService.create(req.body)
         return res.status(httpStatus.CREATED).send(kitchen)
     } catch (err) {
-        if (err.name === 'notFound')
-            return res.status(httpStatus.NOT_FOUND).send(err)
+        if (err.name === 'notFound') return res.status(httpStatus.NOT_FOUND).send(err)
+        else if (err.name === 'notAcceptable') return res.status(httpStatus.NOT_ACCEPTABLE).send(err)
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
     }
 }
