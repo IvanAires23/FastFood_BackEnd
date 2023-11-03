@@ -49,18 +49,35 @@ describe('POST /kitchen', () => {
         })
     })
 
+    test('should return 406 when send name client incorrect', async () => {
+        const food = await createFood()
+        const response = await server.post('/kitchen').send({
+            name: faker.finance.amount(5, 10),
+            foodId: food.id,
+            valueDelivered: faker.finance.amount(),
+            change: faker.finance.amount(5, 10),
+            quant: faker.number.int({ max: 50 }),
+            payment: 'MONEY',
+            change: faker.number.int({max: 500})
+        })
+
+        expect(response.status).toBe(httpStatus.NOT_ACCEPTABLE)
+        expect(response.body).toEqual({
+            name: 'notAcceptable',
+            message: 'Value delivered not acceptable'
+        })
+    })
+
     test('should return 406 when the amount delivered is less than the change', async () => {
-        const valueDelivered = faker.finance.accountNumber(3)
-        const change = faker.number.int({min: 1000, max: 1200})
         const food = await createFood()
         const response = await server.post('/kitchen').send({
             name: faker.person.firstName(),
             foodId: food.id,
-            valueDelivered,
-            change: faker.finance.amount(5, 10),
+            valueDelivered: faker.finance.accountNumber(3),
             quant: faker.number.int({ max: 50 }),
             payment: 'MONEY',
-            change
+            change: faker.number.int({min: 1000, max: 1200}),
+            adds: []
         })
 
         expect(response.status).toBe(httpStatus.NOT_ACCEPTABLE)
@@ -74,14 +91,13 @@ describe('POST /kitchen', () => {
         const response = await server.post('/kitchen').send({
             payment: 'CREDIT',
             foodId: faker.number.int({ max: 100 }),
-            value: faker.number.int({ max: 100 }),
-            change: faker.finance.amount(5, 10),
+            valueDelivered: faker.finance.amount(51, 100, 0),
+            change: faker.number.int({max:50}),
+            quant: faker.number.int({ max: 50 }),
         })
 
         expect(response.status).toBe(httpStatus.BAD_REQUEST)
-        expect(response.body).toEqual(
-            expect.arrayContaining(['"name" is required'])
-        )
+        expect(response.body).toEqual(['"name" is required'])
     })
 
     test('should return 400 when not select form payment', async () => {
