@@ -19,7 +19,7 @@ This is a project focused on managing fast food, where it is possible for the us
   GET /kitchen/:foodId => Search for orders in the kitchen <br>
   POST /kitchen => Create a new order in the kitchen <br>
   POST /kitchen/ready => Updates order to ready <br>
-  POST /kitchen/ready => Delete order
+  POST /kitchen/delete => Delete order
 
 By using this application, fast food can manage all purchases in the establishment
 
