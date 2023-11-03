@@ -6,7 +6,7 @@ export const kitchenSchema = Joi.object({
     name: Joi.string().required().required(),
     foodId: Joi.number().integer().required(),
     change: Joi.number().integer().required(),
-    observation: Joi.string(),
+    observation: Joi.string().allow(''),
     quant: Joi.number().integer().required(),
     adds: Joi.array().items(
         Joi.object({ 
