@@ -16,7 +16,8 @@ kitchenRouter.post(
     validateBody(kitchenIdSchema),
     kitchenController.deleteKitchen
 )
-kitchenRouter.get('/', kitchenController.findAll)
+kitchenRouter.get('/preparing', kitchenController.findPreparing)
+kitchenRouter.get('/ready', kitchenController.findReady)
 kitchenRouter.get('/:foodId', kitchenController.findFoodInKitchen)
 
 export default kitchenRouter

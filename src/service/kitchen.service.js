@@ -47,8 +47,12 @@ async function deleteKitchen(id) {
     return kitchenDeleted
 }
 
-async function findAll() {
-    const kitchen = await kitchenRepository.findAll()
+async function findPreparing() {
+    const kitchen = await kitchenRepository.findPreparing()
+    return kitchen
+}
+async function findReady() {
+    const kitchen = await kitchenRepository.findReady()
     return kitchen
 }
 
@@ -57,7 +61,8 @@ const kitchenService = {
     findFoodInKitchen,
     readyKitchen,
     deleteKitchen,
-    findAll,
+    findPreparing,
+    findReady,
 }
 
 export default kitchenService

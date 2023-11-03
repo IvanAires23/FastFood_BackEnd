@@ -12,9 +12,18 @@ async function create(req, res) {
     }
 }
 
-async function findAll(req, res) {
+async function findPreparing(req, res) {
     try {
-        const kitchen = await kitchenService.findAll()
+        const kitchen = await kitchenService.findPreparing()
+        return res.status(httpStatus.OK).send(kitchen)
+    } catch (err) {
+        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
+    }
+}
+
+async function findReady(req, res) {
+    try {
+        const kitchen = await kitchenService.findReady()
         return res.status(httpStatus.OK).send(kitchen)
     } catch (err) {
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR)
@@ -66,7 +75,8 @@ async function findFoodInKitchen(req, res) {
 
 const kitchenController = {
     create,
-    findAll,
+    findPreparing,
+    findReady,
     findFoodInKitchen,
     readyKitchen,
     deleteKitchen,

@@ -14,8 +14,24 @@ async function create(body) {
     })
 }
 
-async function findAll() {
-    return prisma.kitchen.findMany()
+async function findPreparing() {
+    return prisma.kitchen.findMany({
+        where: {
+            preparation: 'PREPARING'
+        }, include: {
+            Food: true
+        }
+    })
+}
+
+async function findReady() {
+    return prisma.kitchen.findMany({
+        where: {
+            preparation: 'READY'
+        }, include: {
+            Food: true
+        }
+    })
 }
 
 async function findKitchenById(id) {
@@ -44,7 +60,8 @@ async function deleteKitchen(id) {
 const kitchenRepository = {
     create,
     readyKitchen,
-    findAll,
+    findPreparing,
+    findReady,
     findKitchenById,
     deleteKitchen,
 }
