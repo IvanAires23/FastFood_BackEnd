@@ -20,7 +20,7 @@ describe('POST /kitchen', () => {
         expect(response.status).toBe(httpStatus.BAD_REQUEST)
         expect(response.body).toEqual(
             expect.arrayContaining([
-                '"valueDelivery" is required',
+                '"valueDelivered" is required',
                 '"payment" is required',
                 '"name" is required',
                 '"foodId" is required',
@@ -35,7 +35,7 @@ describe('POST /kitchen', () => {
         const response = await server.post('/kitchen').send({
             name: faker.person.firstName(),
             foodId: food.id,
-            valueDelivery: faker.lorem.word(),
+            valueDelivered: faker.lorem.word(),
             change: faker.finance.amount(5, 10),
             quant: faker.number.int({ max: 50 }),
             payment: 'MONEY',
@@ -50,13 +50,13 @@ describe('POST /kitchen', () => {
     })
 
     test('should return 406 when the amount delivered is less than the change', async () => {
-        const valueDelivery = faker.finance.accountNumber(3)
+        const valueDelivered = faker.finance.accountNumber(3)
         const change = faker.number.int({min: 1000, max: 1200})
         const food = await createFood()
         const response = await server.post('/kitchen').send({
             name: faker.person.firstName(),
             foodId: food.id,
-            valueDelivery,
+            valueDelivered,
             change: faker.finance.amount(5, 10),
             quant: faker.number.int({ max: 50 }),
             payment: 'MONEY',
@@ -88,7 +88,7 @@ describe('POST /kitchen', () => {
         const response = await server.post('/kitchen').send({
             name: faker.person.firstName(),
             foodId: faker.number.int({ max: 100 }),
-            valueDelivery: faker.finance.amount(100, 1000),
+            valueDelivered: faker.finance.amount(100, 1000),
             change: faker.number.int({max: 500}),
             quant: faker.number.int({ max: 50 }),
         })
@@ -103,7 +103,7 @@ describe('POST /kitchen', () => {
             change: faker.number.int({min: 10, max: 50}),
             name: faker.person.firstName(),
             payment: 'MONEY',
-            valueDelivery: faker.finance.amount(20, 30),
+            valueDelivered: faker.finance.amount(20, 30),
             foodId: faker.number.int({ max: 10 }),
             quant: faker.number.int({ max: 50 }),
         })
@@ -122,7 +122,7 @@ describe('POST /kitchen', () => {
             change: faker.number.int({min: 10, max: 50}),
             name: faker.person.firstName(),
             payment: 'MONEY',
-            valueDelivery: faker.finance.amount(20, 30),
+            valueDelivered: faker.finance.amount(20, 30),
             foodId: food.id,
             quant: faker.number.int({ max: 50 }),
         })

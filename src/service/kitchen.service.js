@@ -8,9 +8,9 @@ import kitchenRepository from '../repository/kitchen.repository.js'
 async function create(body) {
     const food = await foodRepository.findById(body.foodId)
     if (!food) throw notFoundFood()
-    const valueDelivery = parseInt(body.valueDelivery)
-    if (!valueDelivery) throw notAcceptable()
-    else if(valueDelivery < body.change) throw notAcceptable()
+    const valueDelivered = parseInt(body.valueDelivered, 10)
+    if (!valueDelivered) throw notAcceptable()
+    else if(valueDelivered < body.change) throw notAcceptable()
 
     const kitchen = await kitchenRepository.create(body)
     return kitchen
