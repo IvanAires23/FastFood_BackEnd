@@ -119,12 +119,12 @@ describe('POST /kitchen', () => {
 
         const response = await server.post('/kitchen').send({
             payment: 'CREDIT',
-            change: faker.number.int({min: 10, max: 50}),
+            change: faker.number.int({max: 10}),
             name: faker.person.firstName(),
-            payment: 'MONEY',
             valueDelivered: faker.finance.amount(20, 30),
             foodId: food.id,
             quant: faker.number.int({ max: 50 }),
+            adds: []
         })
         expect(response.status).toBe(httpStatus.CREATED)
     })
