@@ -8,6 +8,13 @@ export const kitchenSchema = Joi.object({
     change: Joi.number().integer().required(),
     observation: Joi.string(),
     quant: Joi.number().integer().required(),
+    adds: Joi.array().items(
+        Joi.object({ 
+            name: Joi.string().required(),
+            price: Joi.number().required(),
+            qnt: Joi.string().required()
+        })
+        )
 })
 
 export const kitchenIdSchema = Joi.object({

@@ -19,6 +19,11 @@ async function activatePrinter(body) {
   print.println(`name food: ${food.name}`);
   print.println(`change: ${body.change}`);
   print.println(`quant: ${body.quant}`);
+  if(body.adds.length >= 1) {
+    for (let i = 0; i < body.adds.length; i++) {
+      print.println(`adds: ${body.adds[i].name}`);
+    }
+  }
   print.cut();
 
   // Simule a impressão em um arquivo
