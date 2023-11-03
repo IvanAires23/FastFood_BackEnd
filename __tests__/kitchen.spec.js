@@ -64,7 +64,7 @@ describe('POST /kitchen', () => {
         expect(response.status).toBe(httpStatus.NOT_ACCEPTABLE)
         expect(response.body).toEqual({
             name: 'notAcceptable',
-            message: 'Value delivered not acceptable'
+            message: 'Do not use a number in the customer name',
         })
     })
 
