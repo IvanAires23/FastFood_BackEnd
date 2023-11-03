@@ -1,3 +1,4 @@
+import nameIncorrent from '../errors/nameIncorrect.error.js'
 import notAcceptable from '../errors/notAcceptable.error.js'
 import notFoundFood from '../errors/notFoundFood.error.js'
 import notFoundKitchen from '../errors/notFoundKitchen.error.js'
@@ -8,6 +9,10 @@ import kitchenRepository from '../repository/kitchen.repository.js'
 async function create(body) {
     const food = await foodRepository.findById(body.foodId)
     if (!food) throw notFoundFood()
+
+    const numberInNameClient = /\d/.test(body.name)
+    if(numberInNameClient) throw nameIncorrent()
+
     const valueDelivered = parseInt(body.valueDelivered, 10)
     if (!valueDelivered) throw notAcceptable()
     else if(valueDelivered < body.change) throw notAcceptable()
