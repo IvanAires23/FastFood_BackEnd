@@ -235,11 +235,21 @@ describe('/GET kitchen/:foodId', () => {
 
 describe('/GET kitchen', () => {
 
-    test('should return 200 when find all kitchen', async () => {
+    test('should return 200 when find foods in preparing in kitchen', async () => {
         const food = await createFood()
         await createKitchen('PREPARING', food.id)
 
-        const response = await server.get('/kitchen')
+        const response = await server.get('/kitchen/preparing')
+
+        expect(response.status).toBe(httpStatus.OK)
+        expect(response.body).toHaveLength(1)
+    })
+
+    test('should return 200 when find foods ready in kitchen', async () => {
+        const food = await createFood()
+        await createKitchen('READY', food.id)
+
+        const response = await server.get('/kitchen/ready')
 
         expect(response.status).toBe(httpStatus.OK)
         expect(response.body).toHaveLength(1)
