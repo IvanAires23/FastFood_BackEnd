@@ -8,13 +8,18 @@ Try it out now at: https://fastfoodapi-vrho.onrender.com
 
 This is a project focused on managing fast food, where it is possible for the user to track the order from registration to pickup. Having a modern and responsive design, it features features such as:
 
--   Home: On the home page it is possible to view all the food available in the restaurant, being able to search for the desired food by name or code, select the one ordered, define the quantity, extras and add it to the cart.
+-   Food: <br>
+  GET /food => Search all the foods on the menu <br>
+  POST /food => Search for food by name or code <br>
+  POST /food/category => Search for food by category <br>
+  POST /food/create => Create a new food on the menu
 
--   Payment: On the payment page, it is possible to review the purchase data, enter the customer's name, define the payment method and define the amount that will be delivered to the cashier.
-
--   Kitchen: On the kitchen page, it is possible to see the orders that are being prepared and those that are already ready, it is also possible to check if the order is ready and cancel the order.
-
--   Delivery: On the delivery page, it is possible to see the names of customers who have their order ready and who are not yet.
+-   Kitchen: <br>
+  GET /kitchen => Search all orders in the kitchen <br>
+  GET /kitchen/:foodId => Search for orders in the kitchen <br>
+  POST /kitchen => Create a new order in the kitchen <br>
+  POST /kitchen/ready => Updates order to ready <br>
+  POST /kitchen/ready => Delete order
 
 By using this application, fast food can manage all purchases in the establishment
 
