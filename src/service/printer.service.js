@@ -9,7 +9,7 @@ async function activatePrinter(body) {
   const print = new printer({
     type: types.EPSON,
     interface: 'printerName:Star_TSP143',
-    
+    characterSet: 'SLOVENIA'
   });
 
   print.alignCenter();
@@ -27,7 +27,7 @@ async function activatePrinter(body) {
   print.cut();
 
   // Simule a impressão em um arquivo
-  const outputFilePath = 'impressao.txt';
+  const outputFilePath = 'print.txt';
   fs.writeFileSync(outputFilePath, print.getBuffer());
 }
 
