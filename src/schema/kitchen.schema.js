@@ -1,7 +1,7 @@
 import Joi from 'joi'
 
 export const kitchenSchema = Joi.object({
-    money: Joi.string().required(),
+    valueDelivery: Joi.string().required(),
     payment: Joi.string().equal('CREDIT', 'DEBIT', 'MONEY').required(),
     name: Joi.string().required().required(),
     foodId: Joi.number().integer().required(),

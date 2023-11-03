@@ -20,7 +20,7 @@ describe('POST /kitchen', () => {
         expect(response.status).toBe(httpStatus.BAD_REQUEST)
         expect(response.body).toEqual(
             expect.arrayContaining([
-                '"money" is required',
+                '"valueDelivery" is required',
                 '"payment" is required',
                 '"name" is required',
                 '"foodId" is required',
@@ -30,11 +30,28 @@ describe('POST /kitchen', () => {
         )
     })
 
+    test('should return 400 when send value money incorrect', async () => {
+        const food = await createFood()
+        const response = await server.post('/kitchen').send({
+            name: faker.person.firstName(),
+            foodId: food.id,
+            valueDelivery: faker.lorem.word(),
+            change: faker.finance.amount(5, 10),
+            quant: faker.number.int({ max: 50 }),
+        })
+
+        expect(response.status).toBe(httpStatus.NOT_ACCEPTABLE)
+        expect(response.body).toEqual({
+            name: 'notAcceptable',
+            message: 'Value is format incorrect'
+        })
+    })
+
     test('should return 400 when not send name', async () => {
         const response = await server.post('/kitchen').send({
             payment: 'CREDIT',
             foodId: faker.number.int({ max: 100 }),
-            money: faker.number.int({ max: 100 }),
+            value: faker.number.int({ max: 100 }),
             change: faker.finance.amount(5, 10),
         })
 
@@ -48,14 +65,13 @@ describe('POST /kitchen', () => {
         const response = await server.post('/kitchen').send({
             name: faker.person.firstName(),
             foodId: faker.number.int({ max: 100 }),
-            money: faker.number.int({ max: 100 }),
-            change: faker.finance.amount(5, 10),
+            valueDelivery: faker.finance.amount(100, 1000),
+            change: faker.number.int({max: 500}),
+            quant: faker.number.int({ max: 50 }),
         })
 
         expect(response.status).toBe(httpStatus.BAD_REQUEST)
-        expect(response.body).toEqual(
-            expect.arrayContaining(['"payment" is required'])
-        )
+        expect(response.body).toEqual(['"payment" is required'])
     })
 
     test('should return 404 when not found food', async () => {
@@ -64,7 +80,7 @@ describe('POST /kitchen', () => {
             change: faker.number.int({min: 10, max: 50}),
             name: faker.person.firstName(),
             payment: 'MONEY',
-            money: faker.finance.amount(20, 30),
+            valueDelivery: faker.finance.amount(20, 30),
             foodId: faker.number.int({ max: 10 }),
             quant: faker.number.int({ max: 50 }),
         })
@@ -83,7 +99,7 @@ describe('POST /kitchen', () => {
             change: faker.number.int({min: 10, max: 50}),
             name: faker.person.firstName(),
             payment: 'MONEY',
-            money: faker.finance.amount(20, 30),
+            valueDelivery: faker.finance.amount(20, 30),
             foodId: food.id,
             quant: faker.number.int({ max: 50 }),
         })
